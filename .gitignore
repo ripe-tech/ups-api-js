@@ -1,0 +1,11 @@
+.DS_Store
+
+yarn.lock
+example.env
+package-lock.json
+
+/.vscode/settings.json
+
+/dist
+/coverage
+/node_modules

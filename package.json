@@ -1,0 +1,66 @@
+{
+    "name": "ups-api",
+    "version": "0.1.0",
+    "description": "The RIPE ID API client",
+    "keywords": [
+        "api",
+        "client",
+        "ups",
+        "js"
+    ],
+    "homepage": "https://github.com/ripe-tech/ups-api-js#readme",
+    "bugs": {
+        "url": "https://github.com/ripe-tech/ups-api-js/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ripe-tech/ups-api-js.git"
+    },
+    "license": "Apache-2.0",
+    "author": {
+        "name": "Platforme",
+        "url": "https://www.platforme.com"
+    },
+    "main": "dist/ups-api.cjs.js",
+    "unpkg": "dist/ups-api.umd.js",
+    "module": "dist/ups-api.esm.js",
+    "browser": "dist/ups-api.umd.js",
+    "files": [
+        "LICENSE",
+        "dist/**/*",
+        "res/**/*",
+        "js/**/*.js",
+        "test/**/*.js"
+    ],
+    "scripts": {
+        "build": "rollup -c",
+        "example": "node examples/simple.js",
+        "lint": "eslint rollup.config.js \"./{js,test}/**/*.{js,json}\"",
+        "lint-fix": "eslint rollup.config.js \"./{js,test}/**/*.{js,json}\" --fix",
+        "prettier": "prettier rollup.config.js \"./*.{js,json}\" \"./{js,test}/**/*.{js,json}\" --write",
+        "pretty": "npm run prettier && npm run lint-fix",
+        "test": "mocha --recursive",
+        "upgrade": "npx sort-package-json && ncu -u",
+        "watch": "rollup -c -w"
+    },
+    "dependencies": {
+        "yonius": "^0.6.5"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.12.10",
+        "@babel/preset-env": "^7.12.11",
+        "@rollup/plugin-babel": "^5.2.2",
+        "@rollup/plugin-commonjs": "^17.0.0",
+        "@rollup/plugin-node-resolve": "^11.1.0",
+        "eslint": "^7.18.0",
+        "eslint-config-hive": "^0.5.3",
+        "mocha": "^8.2.1",
+        "mocha-cli": "^1.0.1",
+        "npm-check-updates": "^11.1.1",
+        "prettier": "^2.2.1",
+        "prettier-config-hive": "^0.1.7",
+        "rollup": "^2.38.1",
+        "rollup-plugin-node-polyfills": "^0.2.1",
+        "sort-package-json": "^1.48.1"
+    }
+}
