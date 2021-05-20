@@ -2,8 +2,8 @@ import { API as BaseAPI, mix, load, conf, verify } from "yonius";
 import { DocumentAPI } from "./document";
 import { ShipmentAPI } from "./shipment";
 
-const UPS_SHIPPING_BASE_URL = "https://wwwcie.ups.com/ship/v1807/";
-const UPS_DOCUMENT_BASE_URL = "https://wwwcie.ups.com/rest/PaperlessDocumentAPI/";
+const UPS_SHIPPING_BASE_URL = "https://onlinetools.ups.com/ship/v1807/";
+const UPS_DOCUMENT_BASE_URL = "https://filexfer.ups.com/rest/PaperlessDocumentAPI/";
 
 export class API extends mix(BaseAPI).with(DocumentAPI, ShipmentAPI) {
     constructor(kwargs = {}) {
