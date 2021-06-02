@@ -3,14 +3,16 @@ import { DocumentAPI } from "./document";
 import { ShipmentAPI } from "./shipment";
 import { TrackingAPI } from "./tracking";
 
-const UPS_SHIPPING_BASE_URL = "https://onlinetools.ups.com/ship/v1807/";
 const UPS_DOCUMENT_BASE_URL = "https://filexfer.ups.com/rest/PaperlessDocumentAPI/";
+const UPS_SHIPPING_BASE_URL = "https://onlinetools.ups.com/ship/v1807/";
+const UPS_TRACKING_BASE_URL = "https://wwwcie.ups.com/track/v1/";
 
 export class API extends mix(BaseAPI).with(DocumentAPI, ShipmentAPI, TrackingAPI) {
     constructor(kwargs = {}) {
         super(kwargs);
-        this.shippingBaseUrl = conf("UPS_SHIPPING_BASE_URL", UPS_SHIPPING_BASE_URL);
         this.documentBaseUrl = conf("UPS_DOCUMENT_BASE_URL", UPS_DOCUMENT_BASE_URL);
+        this.shippingBaseUrl = conf("UPS_SHIPPING_BASE_URL", UPS_SHIPPING_BASE_URL);
+        this.trackingBaseUrl = conf("UPS_TRACKING_BASE_URL", UPS_TRACKING_BASE_URL);
         this.license = conf("UPS_LICENSE", null);
         this.username = conf("UPS_USERNAME", null);
         this.password = conf("UPS_PASSWORD", null);
@@ -39,8 +41,8 @@ export class API extends mix(BaseAPI).with(DocumentAPI, ShipmentAPI, TrackingAPI
             case "headers":
                 options.headers = options.params !== undefined ? options.headers : {};
                 options.headers.AccessLicenseNumber = this.license;
-                options.headers.Username = this.username;
-                options.headers.Password = this.password;
+                if (this.username) options.headers.Username = this.username;
+                if (this.password) options.headers.Password = this.password;
                 break;
             case "dataJ":
                 options.dataJ = options.dataJ !== undefined ? options.dataJ : {};
