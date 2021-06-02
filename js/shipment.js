@@ -22,10 +22,6 @@ export const KGS_TYPE = "KGS";
 
 export const ShipmentAPI = superclass =>
     class extends superclass {
-        getTrackingUrl(trackingNumber) {
-            return `http://wwwapps.ups.com/WebTracking/processInputRequest?TypeOfInquiryNumber=T&InquiryNumber1=${trackingNumber}`;
-        }
-
         async createShipment(payload, options = {}) {
             const url = this.shippingBaseUrl + "shipments";
             const response = await this.post(url, {
