@@ -60,10 +60,24 @@ export class API extends mix(BaseAPI).with(DocumentAPI, ShipmentAPI) {
     }
 
     async _handleResponse(response, errorMessage = "Problem in request") {
-        const result = await response.json();
+        let result = null;
+        if (
+            response.headers.get("content-type") &&
+            response.headers.get("content-type").toLowerCase().startsWith("application/json")
+        ) {
+            result = await response.json();
+        } else if (
+            response.headers.get("content-type") &&
+            response.headers.get("content-type").toLowerCase().startsWith("text/")
+        ) {
+            result = await response.text();
+        } else {
+            result = await response.blob();
+        }
+
         const errors =
             result.response && result.response.errors
-                ? result.response.errors.map(JSON.stringify).join(",")
+                ? result.response.errors.map(error => JSON.stringify(error)).join(",")
                 : null;
         verify(!errors, errors, response.status || 500);
         verify(!result.Fault, result.error || errorMessage, response.status || 500);
