@@ -63,13 +63,46 @@ export class API extends mix(BaseAPI).with(DocumentAPI, ShipmentAPI, TrackingAPI
     }
 
     async _handleResponse(response, errorMessage = "Problem in request") {
-        const result = await super._handleResponse(response, errorMessage);
+        const result = this._getResult(response);
+        const errors =
+            result.response && result.response.errors
+                ? result.response.errors.map(error => JSON.stringify(error)).join(",")
+                : null;
+        verify(!errors, errors, response.status || 500);
         verify(!result.Fault, result.error || errorMessage, response.status || 500);
+        verify(response.ok, result.error || errorMessage, response.status || 500);
         return result;
     }
 
     _getDocumentBaseUrl() {
         // remove the trailing slash, as the API doesn't handle it properly
         return this.documentBaseUrl.slice(0, this.documentBaseUrl.length - 1);
+    }
+
+    /**
+     * Obtains the response object from the provided response making sure that the
+     * content type is respected when doing so.
+     *
+     * @param {Response} response The HTTP response resulting from the request
+     * made by the API client
+     * @returns {Object|String|Blob} The parsed result value for the provided
+     * response object taking into account the content type of it.
+     */
+    async _getResult(response) {
+        let result = null;
+        if (
+            response.headers.get("content-type") &&
+            response.headers.get("content-type").toLowerCase().startsWith("application/json")
+        ) {
+            result = await response.json();
+        } else if (
+            response.headers.get("content-type") &&
+            response.headers.get("content-type").toLowerCase().startsWith("text/")
+        ) {
+            result = await response.text();
+        } else {
+            result = await response.blob();
+        }
+        return result;
     }
 }
