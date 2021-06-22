@@ -63,7 +63,7 @@ export class API extends mix(BaseAPI).with(DocumentAPI, ShipmentAPI, TrackingAPI
     }
 
     async _handleResponse(response, errorMessage = "Problem in request") {
-        const result = this._getResult(response);
+        const result = await this._getResult(response);
         const errors =
             result.response && result.response.errors
                 ? result.response.errors.map(error => JSON.stringify(error)).join(",")
@@ -74,8 +74,15 @@ export class API extends mix(BaseAPI).with(DocumentAPI, ShipmentAPI, TrackingAPI
         return result;
     }
 
+    /**
+     * Retrieves the document base URL, normalizing it according to
+     * the limitation of the UPS API.
+     *
+     * @returns {String} The normalized document base URL normalized and
+     * ready to be used by API calls.
+     */
     _getDocumentBaseUrl() {
-        // remove the trailing slash, as the API doesn't handle it properly
+        // removes the trailing slash, as the API doesn't handle it properly
         return this.documentBaseUrl.slice(0, this.documentBaseUrl.length - 1);
     }
 
