@@ -19,7 +19,7 @@ export const CUSTOMER_BOX_PACKAGING_TYPE = "02";
  * The code representing a padded box
  * package.
  */
-export const PADDED_BOX_PACKAGING_TYPE = "03";
+export const PAK_BOX_PACKAGING_TYPE = "03";
 
 /**
  * The code representing an express box
