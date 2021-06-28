@@ -4,6 +4,16 @@
 export const EXPRESS_SERVICE_CODE = "07";
 
 /*
+ * The code representing a standard shipment.
+ */
+export const STANDARD_SERVICE_CODE = "11";
+
+/*
+ * The code representing a saver shipment.
+ */
+export const SAVER_SERVICE_CODE = "65";
+
+/*
  * The code representing a shipment that is
  * charged via UPS account.
  */
