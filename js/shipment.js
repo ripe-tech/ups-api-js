@@ -20,6 +20,18 @@ export const SAVER_SERVICE_CODE = "65";
 export const TRANSPORTATION_CHARGE_TYPE = "01";
 
 /**
+ * The code representing a customer box
+ * package.
+ */
+export const CUSTOMER_BOX_PACKAGING_TYPE = "02";
+
+/**
+ * The code representing a padded box
+ * package.
+ */
+export const PAK_BOX_PACKAGING_TYPE = "03";
+
+/**
  * The code representing an express box
  * package.
  */
