@@ -37,6 +37,9 @@ export class API extends mix(BaseAPI).with(DocumentAPI, ShipmentAPI, TrackingAPI
         options.kwargs = options.kwargs !== undefined ? options.kwargs : {};
         const auth = options.kwargs.auth;
         delete options.kwargs.auth;
+
+        // determines the kind of authentication method to be used and
+        // changes the corresponding header or data payload
         switch (auth) {
             case "headers":
                 options.headers = options.params !== undefined ? options.headers : {};
