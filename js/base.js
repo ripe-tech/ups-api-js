@@ -3,16 +3,16 @@ import { DocumentAPI } from "./document";
 import { ShipmentAPI } from "./shipment";
 import { TrackingAPI } from "./tracking";
 
-const UPS_DOCUMENT_BASE_URL = "https://filexfer.ups.com/rest/PaperlessDocumentAPI/";
-const UPS_SHIPPING_BASE_URL = "https://onlinetools.ups.com/ship/v1807/";
-const UPS_TRACKING_BASE_URL = "https://onlinetools.ups.com/track/v1807/";
+const DOCUMENT_BASE_URL = "https://filexfer.ups.com/rest/PaperlessDocumentAPI/";
+const SHIPPING_BASE_URL = "https://onlinetools.ups.com/ship/v1807/";
+const TRACKING_BASE_URL = "https://onlinetools.ups.com/track/v1807/";
 
 export class API extends mix(BaseAPI).with(DocumentAPI, ShipmentAPI, TrackingAPI) {
     constructor(kwargs = {}) {
         super(kwargs);
-        this.documentBaseUrl = conf("UPS_DOCUMENT_BASE_URL", UPS_DOCUMENT_BASE_URL);
-        this.shippingBaseUrl = conf("UPS_SHIPPING_BASE_URL", UPS_SHIPPING_BASE_URL);
-        this.trackingBaseUrl = conf("UPS_TRACKING_BASE_URL", UPS_TRACKING_BASE_URL);
+        this.documentBaseUrl = conf("UPS_DOCUMENT_BASE_URL", DOCUMENT_BASE_URL);
+        this.shippingBaseUrl = conf("UPS_SHIPPING_BASE_URL", SHIPPING_BASE_URL);
+        this.trackingBaseUrl = conf("UPS_TRACKING_BASE_URL", TRACKING_BASE_URL);
         this.license = conf("UPS_LICENSE", null);
         this.username = conf("UPS_USERNAME", null);
         this.password = conf("UPS_PASSWORD", null);
