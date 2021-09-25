@@ -15,7 +15,7 @@ The Javascript version of the UPS Shipping service.
 
 ## License
 
-UPS API Javascript is currently licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/).
+UPS API for Javascript is currently licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/).
 
 ## Build Automation
 
