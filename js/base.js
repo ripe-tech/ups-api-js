@@ -21,6 +21,8 @@ export class API extends mix(BaseAPI).with(DocumentAPI, ShipmentAPI, TrackingAPI
             kwargs.shippingBaseUrl === undefined ? this.shippingBaseUrl : kwargs.shippingBaseUrl;
         this.documentBaseUrl =
             kwargs.documentBaseUrl === undefined ? this.documentBaseUrl : kwargs.documentBaseUrl;
+        this.trackingBaseUrl =
+            kwargs.trackingBaseUrl === undefined ? this.trackingBaseUrl : kwargs.trackingBaseUrl;
         this.license = kwargs.license === undefined ? this.license : kwargs.license;
         this.username = kwargs.username === undefined ? this.username : kwargs.username;
         this.password = kwargs.password === undefined ? this.password : kwargs.password;
