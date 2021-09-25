@@ -1,4 +1,4 @@
-<h1>UPS API</h1>
+# UPS API for Javascript
 
 The Javascript version of the UPS Shipping service.
 
