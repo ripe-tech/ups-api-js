@@ -5,7 +5,7 @@ import { TrackingAPI } from "./tracking";
 
 const DOCUMENT_BASE_URL = "https://filexfer.ups.com/rest/PaperlessDocumentAPI/";
 const SHIPPING_BASE_URL = "https://onlinetools.ups.com/ship/v1807/";
-const TRACKING_BASE_URL = "https://onlinetools.ups.com/track/v1807/";
+const TRACKING_BASE_URL = "https://onlinetools.ups.com/track/v1/";
 
 export class API extends mix(BaseAPI).with(DocumentAPI, ShipmentAPI, TrackingAPI) {
     constructor(kwargs = {}) {
