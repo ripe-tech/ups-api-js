@@ -1,7 +1,7 @@
 {
     "name": "ups-api",
     "version": "0.2.1",
-    "description": "The Ripe UPS API client",
+    "description": "The RIPE UPS API client",
     "keywords": [
         "api",
         "client",
