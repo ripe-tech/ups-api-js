@@ -122,8 +122,8 @@ export class API extends mix(BaseAPI).with(DocumentAPI, LocatorAPI, ShipmentAPI,
     }
 
     _getXMLHeader() {
-        return `<?xml version=\"1.0\"?> 
-        <AccessRequest xml:lang=\"en-US\"> 
+        return `<?xml version="1.0"?> 
+        <AccessRequest xml:lang="en-US"> 
             <AccessLicenseNumber>${this.license}</AccessLicenseNumber> 
             <UserId>${this.username}</UserId> 
             <Password>${this.password}</Password> 
