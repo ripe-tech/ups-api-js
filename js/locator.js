@@ -36,7 +36,7 @@ export const LocatorAPI = superclass =>
             verify(countryCode, "Country code must be defined");
 
             const xmlRequest =
-            getXMLHeader(this.username, this.password, this.license) +
+                getXMLHeader(this.username, this.password, this.license) +
                 `<?xml version="1.0"?>
                 <LocatorRequest>
                     <Request>

@@ -21,14 +21,14 @@ export const getXMLHeader = (username, password, license) => {
         <UserId>${username}</UserId> 
         <Password>${password}</Password> 
     </AccessRequest>`;
-}
+};
 
 /**
  * Transforms the XML string to a JSON object.
  *
  * @returns {JSON} The JSON object.
  */
-export const xmlToJson = (xml) => {
+export const xmlToJson = xml => {
     let json = xml2js(xml, {
         compact: true,
         ignoreDeclaration: true,
@@ -36,9 +36,8 @@ export const xmlToJson = (xml) => {
         textKey: TEXT_KEY
     });
     json = normalizeJson(json);
-    return json
-}
-
+    return json;
+};
 
 /**
  * Normalizes the structure resultant from the XML
@@ -47,20 +46,20 @@ export const xmlToJson = (xml) => {
  * @returns {JSON} The normalized JSON object.
  */
 const normalizeJson = json => {
-    if (typeof json !== 'object') return {};
+    if (typeof json !== "object") return {};
     const normalizedJson = Object.assign({}, json);
     _normalize(normalizedJson);
     return normalizedJson;
-}
+};
 
-const _normalize = async (json) => {
+const _normalize = async json => {
     Object.keys(json).forEach(k => {
         const child = json[k];
         const childKeys = Object.keys(child);
-        if (childKeys.length === 1 && childKeys[0] == TEXT_KEY) {
-            json[k] = child[TEXT_KEY]
+        if (childKeys.length === 1 && childKeys[0] === TEXT_KEY) {
+            json[k] = child[TEXT_KEY];
         } else {
-            _normalize(child)
+            _normalize(child);
         }
-    })
+    });
 };
