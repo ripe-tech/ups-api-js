@@ -1,6 +1,6 @@
-import { xml2js } from "xml-js";
-
 import { verify } from "yonius";
+
+import { getXMLHeader, xmlToJson } from "./util";
 
 export const LocatorAPI = superclass =>
     class extends superclass {
@@ -19,12 +19,7 @@ export const LocatorAPI = superclass =>
                 ...options
             });
             const xmlResponse = await response.text();
-            const jsonResponse = xml2js(xmlResponse, {
-                compact: true,
-                ignoreDeclaration: true,
-                trim: true,
-                textKey: "text"
-            });
+            const jsonResponse = xmlToJson(xmlResponse);
             return jsonResponse;
         }
 
@@ -41,7 +36,7 @@ export const LocatorAPI = superclass =>
             verify(countryCode, "Country code must be defined");
 
             const xmlRequest =
-                this._getXMLHeader() +
+            getXMLHeader(this.username, this.password, this.license) +
                 `<?xml version="1.0"?>
                 <LocatorRequest>
                     <Request>

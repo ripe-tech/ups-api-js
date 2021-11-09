@@ -1,4 +1,5 @@
 import { API as BaseAPI, mix, load, conf, verify } from "yonius";
+
 import { DocumentAPI } from "./document";
 import { LocatorAPI } from "./locator";
 import { ShipmentAPI } from "./shipment";
@@ -119,14 +120,5 @@ export class API extends mix(BaseAPI).with(DocumentAPI, LocatorAPI, ShipmentAPI,
     _getDocumentBaseUrl() {
         // removes the trailing slash, as the API doesn't handle it properly
         return this.documentBaseUrl.slice(0, this.documentBaseUrl.length - 1);
-    }
-
-    _getXMLHeader() {
-        return `<?xml version="1.0"?> 
-        <AccessRequest xml:lang="en-US"> 
-            <AccessLicenseNumber>${this.license}</AccessLicenseNumber> 
-            <UserId>${this.username}</UserId> 
-            <Password>${this.password}</Password> 
-        </AccessRequest>`;
     }
 }
