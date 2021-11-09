@@ -8,6 +8,9 @@ const TEXT_KEY = "text";
  * Builds the XML header for XML requests with license, username
  * and password.
  *
+ * @param {String} username The UPS account username.
+ * @param {String} password The UPS account password.
+ * @param {String} license The UPS account license.
  * @returns {String} The XML request header.
  */
 export const getXMLHeader = (username, password, license) => {
@@ -26,6 +29,7 @@ export const getXMLHeader = (username, password, license) => {
 /**
  * Transforms the XML string to a JSON object.
  *
+ * @param {String} xml The XML string to convert.
  * @returns {JSON} The JSON object.
  */
 export const xmlToJson = xml => {
@@ -35,7 +39,7 @@ export const xmlToJson = xml => {
         trim: true,
         textKey: TEXT_KEY
     });
-    json = normalizeJson(json);
+    json = normalize(json);
     return json;
 };
 
@@ -43,9 +47,10 @@ export const xmlToJson = xml => {
  * Normalizes the structure resultant from the XML
  * to JSON conversion.
  *
+ * @param {JSON} json The JSON resultant from the XML conversion to normalize.
  * @returns {JSON} The normalized JSON object.
  */
-const normalizeJson = json => {
+const normalize = json => {
     if (typeof json !== "object") return {};
     const normalizedJson = Object.assign({}, json);
     _normalize(normalizedJson);
@@ -56,10 +61,7 @@ const _normalize = async json => {
     Object.keys(json).forEach(k => {
         const child = json[k];
         const childKeys = Object.keys(child);
-        if (childKeys.length === 1 && childKeys[0] === TEXT_KEY) {
-            json[k] = child[TEXT_KEY];
-        } else {
-            _normalize(child);
-        }
+        if (childKeys.length === 1 && childKeys[0] === TEXT_KEY) json[k] = child[TEXT_KEY];
+        else _normalize(child);
     });
 };
