@@ -26,7 +26,7 @@ export const TrackingAPI = superclass =>
                 <TrackRequest>
                     <Request>
                         <RequestAction>Track</RequestAction>
-                        <RequestOption>8</RequestOption>
+                        <RequestOption>9</RequestOption>
                     </Request>
                     <TrackingNumber>${trackingNumber}</TrackingNumber>
                 </TrackRequest>`;
