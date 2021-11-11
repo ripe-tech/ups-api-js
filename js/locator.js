@@ -1,5 +1,3 @@
-import { verify } from "yonius";
-
 import { getXMLHeader, xmlToJson } from "./util";
 
 export const LocatorAPI = superclass =>
@@ -30,11 +28,6 @@ export const LocatorAPI = superclass =>
             countryCode,
             { consignee = null, locale = "en_US", metric = true, radius = 150 } = {}
         ) {
-            verify(addressLine, "Address line must be defined");
-            verify(city, "City must be defined");
-            verify(postalCode, "Postal code must be defined");
-            verify(countryCode, "Country code must be defined");
-
             const xmlRequest =
                 getXMLHeader(this.username, this.password, this.license) +
                 `<?xml version="1.0"?>
