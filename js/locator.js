@@ -10,7 +10,7 @@ export const LocatorAPI = superclass =>
                 countryCode,
                 options
             );
-            const response = await this.post(this.locatorBaseUrl, {
+            const response = await this.post(this._getLocatorBaseUrl(), {
                 kwargs: { auth: "headers" },
                 mime: "application/xml",
                 data: xmlRequest,

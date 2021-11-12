@@ -6,7 +6,7 @@ import { ShipmentAPI } from "./shipment";
 import { TrackingAPI } from "./tracking";
 
 const DOCUMENT_BASE_URL = "https://filexfer.ups.com/rest/PaperlessDocumentAPI/";
-const LOCATOR_BASE_URL = "https://onlinetools.ups.com/ups.app/xml/Locator";
+const LOCATOR_BASE_URL = "https://onlinetools.ups.com/ups.app/xml/Locator/";
 const SHIPPING_BASE_URL = "https://onlinetools.ups.com/ship/v1807/";
 const TRACKING_BASE_URL = "https://onlinetools.ups.com/track/v1/";
 
@@ -112,13 +112,23 @@ export class API extends mix(BaseAPI).with(DocumentAPI, LocatorAPI, ShipmentAPI,
 
     /**
      * Retrieves the document base URL, normalizing it according to
-     * the limitation of the UPS API.
+     * the limitations of the UPS API.
      *
-     * @returns {String} The normalized document base URL normalized and
-     * ready to be used by API calls.
+     * @returns {String} The normalized document base URL ready to be used by API calls.
      */
     _getDocumentBaseUrl() {
         // removes the trailing slash, as the API doesn't handle it properly
         return this.documentBaseUrl.slice(0, this.documentBaseUrl.length - 1);
+    }
+
+    /**
+     * Retrieves the locator base URL, normalizing it according to
+     * the limitations of the UPS API.
+     *
+     * @returns {String} The normalized locator base URL ready to be used by API calls.
+     */
+    _getLocatorBaseUrl() {
+        // removes the trailing slash, as the API doesn't handle it properly
+        return this.locatorBaseUrl.slice(0, this.locatorBaseUrl.length - 1);
     }
 }
