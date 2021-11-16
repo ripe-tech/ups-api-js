@@ -1,16 +1,19 @@
 import { API as BaseAPI, mix, load, conf, verify } from "yonius";
 import { DocumentAPI } from "./document";
+import { PickupAPI } from "./pickup";
 import { ShipmentAPI } from "./shipment";
 import { TrackingAPI } from "./tracking";
 
 const DOCUMENT_BASE_URL = "https://filexfer.ups.com/rest/PaperlessDocumentAPI/";
+const PICKUP_BASE_URL = "https://onlinetools.ups.com/ship/v1707/pickups/";
 const SHIPPING_BASE_URL = "https://onlinetools.ups.com/ship/v1807/";
 const TRACKING_BASE_URL = "https://onlinetools.ups.com/track/v1/";
 
-export class API extends mix(BaseAPI).with(DocumentAPI, ShipmentAPI, TrackingAPI) {
+export class API extends mix(BaseAPI).with(DocumentAPI, PickupAPI, ShipmentAPI, TrackingAPI) {
     constructor(kwargs = {}) {
         super(kwargs);
         this.documentBaseUrl = conf("UPS_DOCUMENT_BASE_URL", DOCUMENT_BASE_URL);
+        this.pickupBaseUrl = conf("UPS_PICKUP_BASE_URL", PICKUP_BASE_URL);
         this.shippingBaseUrl = conf("UPS_SHIPPING_BASE_URL", SHIPPING_BASE_URL);
         this.trackingBaseUrl = conf("UPS_TRACKING_BASE_URL", TRACKING_BASE_URL);
         this.license = conf("UPS_LICENSE", null);
