@@ -2,19 +2,28 @@ import { API as BaseAPI, mix, load, conf, verify } from "yonius";
 
 import { DocumentAPI } from "./document";
 import { LocatorAPI } from "./locator";
+import { PickupAPI } from "./pickup";
 import { ShipmentAPI } from "./shipment";
 import { TrackingAPI } from "./tracking";
 
 const DOCUMENT_BASE_URL = "https://filexfer.ups.com/rest/PaperlessDocumentAPI/";
 const LOCATOR_BASE_URL = "https://onlinetools.ups.com/ups.app/xml/Locator/";
+const PICKUP_BASE_URL = "https://onlinetools.ups.com/ship/v1707/pickups/";
 const SHIPPING_BASE_URL = "https://onlinetools.ups.com/ship/v1807/";
 const TRACKING_BASE_URL = "https://onlinetools.ups.com/track/v1/";
 
-export class API extends mix(BaseAPI).with(DocumentAPI, LocatorAPI, ShipmentAPI, TrackingAPI) {
+export class API extends mix(BaseAPI).with(
+    DocumentAPI,
+    LocatorAPI,
+    PickupAPI,
+    ShipmentAPI,
+    TrackingAPI
+) {
     constructor(kwargs = {}) {
         super(kwargs);
         this.documentBaseUrl = conf("UPS_DOCUMENT_BASE_URL", DOCUMENT_BASE_URL);
-        this.locatorBaseUrl = conf("LOCATOR_BASE_URL", LOCATOR_BASE_URL);
+        this.locatorBaseUrl = conf("UPS_LOCATOR_BASE_URL", LOCATOR_BASE_URL);
+        this.pickupBaseUrl = conf("UPS_PICKUP_BASE_URL", PICKUP_BASE_URL);
         this.shippingBaseUrl = conf("UPS_SHIPPING_BASE_URL", SHIPPING_BASE_URL);
         this.trackingBaseUrl = conf("UPS_TRACKING_BASE_URL", TRACKING_BASE_URL);
         this.license = conf("UPS_LICENSE", null);
@@ -130,5 +139,17 @@ export class API extends mix(BaseAPI).with(DocumentAPI, LocatorAPI, ShipmentAPI,
     _getLocatorBaseUrl() {
         // removes the trailing slash, as the API doesn't handle it properly
         return this.locatorBaseUrl.slice(0, this.locatorBaseUrl.length - 1);
+    }
+
+    /**
+     * Retrieves the pickup base URL, normalizing it according to
+     * the limitation of the UPS API.
+     *
+     * @returns {String} The normalized pickup base URL normalized and
+     * ready to be used by API calls.
+     */
+    _getPickupBaseUrl() {
+        // removes the trailing slash, as the API doesn't handle it properly
+        return this.pickupBaseUrl.slice(0, this.pickupBaseUrl.length - 1);
     }
 }
