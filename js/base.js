@@ -1,18 +1,28 @@
 import { API as BaseAPI, mix, load, conf, verify } from "yonius";
+
 import { DocumentAPI } from "./document";
+import { LocatorAPI } from "./locator";
 import { PickupAPI } from "./pickup";
 import { ShipmentAPI } from "./shipment";
 import { TrackingAPI } from "./tracking";
 
 const DOCUMENT_BASE_URL = "https://filexfer.ups.com/rest/PaperlessDocumentAPI/";
+const LOCATOR_BASE_URL = "https://onlinetools.ups.com/ups.app/xml/Locator/";
 const PICKUP_BASE_URL = "https://onlinetools.ups.com/ship/v1707/pickups/";
 const SHIPPING_BASE_URL = "https://onlinetools.ups.com/ship/v1807/";
 const TRACKING_BASE_URL = "https://onlinetools.ups.com/track/v1/";
 
-export class API extends mix(BaseAPI).with(DocumentAPI, PickupAPI, ShipmentAPI, TrackingAPI) {
+export class API extends mix(BaseAPI).with(
+    DocumentAPI,
+    LocatorAPI,
+    PickupAPI,
+    ShipmentAPI,
+    TrackingAPI
+) {
     constructor(kwargs = {}) {
         super(kwargs);
         this.documentBaseUrl = conf("UPS_DOCUMENT_BASE_URL", DOCUMENT_BASE_URL);
+        this.locatorBaseUrl = conf("UPS_LOCATOR_BASE_URL", LOCATOR_BASE_URL);
         this.pickupBaseUrl = conf("UPS_PICKUP_BASE_URL", PICKUP_BASE_URL);
         this.shippingBaseUrl = conf("UPS_SHIPPING_BASE_URL", SHIPPING_BASE_URL);
         this.trackingBaseUrl = conf("UPS_TRACKING_BASE_URL", TRACKING_BASE_URL);
@@ -83,30 +93,6 @@ export class API extends mix(BaseAPI).with(DocumentAPI, PickupAPI, ShipmentAPI, 
     }
 
     /**
-     * Retrieves the document base URL, normalizing it according to
-     * the limitation of the UPS API.
-     *
-     * @returns {String} The normalized document base URL normalized and
-     * ready to be used by API calls.
-     */
-    _getDocumentBaseUrl() {
-        // removes the trailing slash, as the API doesn't handle it properly
-        return this.documentBaseUrl.slice(0, this.documentBaseUrl.length - 1);
-    }
-
-    /**
-     * Retrieves the pickup base URL, normalizing it according to
-     * the limitation of the UPS API.
-     *
-     * @returns {String} The normalized pickup base URL normalized and
-     * ready to be used by API calls.
-     */
-    _getPickupBaseUrl() {
-        // removes the trailing slash, as the API doesn't handle it properly
-        return this.pickupBaseUrl.slice(0, this.pickupBaseUrl.length - 1);
-    }
-
-    /**
      * Obtains the response object from the provided response making sure that the
      * content type is respected when doing so.
      *
@@ -131,5 +117,39 @@ export class API extends mix(BaseAPI).with(DocumentAPI, PickupAPI, ShipmentAPI, 
             result = await response.blob();
         }
         return result;
+    }
+
+    /**
+     * Retrieves the document base URL, normalizing it according to
+     * the limitations of the UPS API.
+     *
+     * @returns {String} The normalized document base URL ready to be used by API calls.
+     */
+    _getDocumentBaseUrl() {
+        // removes the trailing slash, as the API doesn't handle it properly
+        return this.documentBaseUrl.slice(0, this.documentBaseUrl.length - 1);
+    }
+
+    /**
+     * Retrieves the locator base URL, normalizing it according to
+     * the limitations of the UPS API.
+     *
+     * @returns {String} The normalized locator base URL ready to be used by API calls.
+     */
+    _getLocatorBaseUrl() {
+        // removes the trailing slash, as the API doesn't handle it properly
+        return this.locatorBaseUrl.slice(0, this.locatorBaseUrl.length - 1);
+    }
+
+    /**
+     * Retrieves the pickup base URL, normalizing it according to
+     * the limitation of the UPS API.
+     *
+     * @returns {String} The normalized pickup base URL normalized and
+     * ready to be used by API calls.
+     */
+    _getPickupBaseUrl() {
+        // removes the trailing slash, as the API doesn't handle it properly
+        return this.pickupBaseUrl.slice(0, this.pickupBaseUrl.length - 1);
     }
 }
