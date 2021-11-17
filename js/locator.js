@@ -3,7 +3,7 @@ import { getXMLHeader, xmlToJson } from "./util";
 export const LocatorAPI = superclass =>
     class extends superclass {
         async getNearestAccessPoint(addressLine, city, postalCode, countryCode, options = {}) {
-            const data = this._buildNearestAccessPointRequest(
+            const data = this._buildNearestAccessPointPayload(
                 addressLine,
                 city,
                 postalCode,
@@ -21,7 +21,7 @@ export const LocatorAPI = superclass =>
             return result;
         }
 
-        _buildNearestAccessPointRequest(
+        _buildNearestAccessPointPayload(
             addressLine,
             city,
             postalCode,
