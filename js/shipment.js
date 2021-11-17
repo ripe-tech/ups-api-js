@@ -63,4 +63,23 @@ export const ShipmentAPI = superclass =>
             });
             return response;
         }
+
+        async getWaybill(trackingNumber, { format = "pdf", ...options } = {}) {
+            const url = this.shippingBaseUrl + "shipments/labels";
+            const response = await this.post(url, {
+                kwargs: { auth: "headers" },
+                ...options,
+                dataJ: {
+                    LabelRecoveryRequest: {
+                        TrackingNumber: String(trackingNumber),
+                        LabelSpecification: {
+                            LabelImageFormat: {
+                                Code: format.toUpperCase()
+                            }
+                        }
+                    }
+                }
+            });
+            return response;
+        }
     };
