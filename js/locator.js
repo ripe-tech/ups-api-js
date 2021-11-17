@@ -17,8 +17,8 @@ export const LocatorAPI = superclass =>
                 ...options
             });
             const xml = await response.text();
-            const json = xmlToJson(xml);
-            return json;
+            const result = xmlToJson(xml);
+            return result;
         }
 
         _buildNearestAccessPointRequest(
