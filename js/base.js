@@ -95,6 +95,18 @@ export class API extends mix(BaseAPI).with(DocumentAPI, PickupAPI, ShipmentAPI, 
     }
 
     /**
+     * Retrieves the pickup base URL, normalizing it according to
+     * the limitation of the UPS API.
+     *
+     * @returns {String} The normalized pickup base URL normalized and
+     * ready to be used by API calls.
+     */
+    _getPickupBaseUrl() {
+        // removes the trailing slash, as the API doesn't handle it properly
+        return this.pickupBaseUrl.slice(0, this.pickupBaseUrl.length - 1);
+    }
+
+    /**
      * Obtains the response object from the provided response making sure that the
      * content type is respected when doing so.
      *
