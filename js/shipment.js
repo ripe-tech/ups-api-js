@@ -45,12 +45,31 @@ export const KGS_TYPE = "KGS";
 export const ShipmentAPI = superclass =>
     class extends superclass {
         async createShipment(payload, options = {}) {
+            // swaps the target format if it is PDF for PNG
+            // due to the limitations of the UPS API
+            const format = payload.LabelSpecification.LabelImageFormat.Code.toUpperCase();
+            if (format === "PDF") payload.LabelSpecification.LabelImageFormat.Code = "PNG";
+
             const url = this.shippingBaseUrl + "shipments";
             const response = await this.post(url, {
                 kwargs: { auth: "headers" },
                 ...options,
                 dataJ: { ShipmentRequest: payload }
             });
+
+            // requests a PDF copy of the PNG label and
+            // returns it making it seamless for the user
+            if (format === "PDF") {
+                const trackingNumber =
+                    response.ShipmentResponse.ShipmentResults.ShipmentIdentificationNumber;
+                const waybill = await this.getWaybill(trackingNumber, { format: format });
+                const labelImage = waybill.LabelRecoveryResponse.LabelResults.LabelImage;
+                response.ShipmentResponse.ShipmentResults.PackageResults.ShippingLabel = {
+                    ImageFormat: format,
+                    GraphicImage: labelImage.GraphicImage
+                };
+            }
+
             return response;
         }
 
