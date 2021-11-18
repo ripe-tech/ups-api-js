@@ -65,7 +65,9 @@ export const ShipmentAPI = superclass =>
                 const waybill = await this.getWaybill(trackingNumber, { format: format });
                 const labelImage = waybill.LabelRecoveryResponse.LabelResults.LabelImage;
                 response.ShipmentResponse.ShipmentResults.PackageResults.ShippingLabel = {
-                    ImageFormat: format,
+                    ImageFormat: {
+                        Code: format
+                    },
                     GraphicImage: labelImage.GraphicImage
                 };
             }
