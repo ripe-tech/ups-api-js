@@ -4,14 +4,18 @@ The Javascript version of the UPS Shipping service.
 
 ## Configuration
 
-| Name                      | Type  | Default                                               | Description                                                                   |
-| ------------------------- | ----- | ----------------------------------------------------- | ----------------------------------------------------------------------------- |
-| **UPS_SHIPPING_BASE_URL** | `str` | `https://onlinetools.ups.com/ship/v1807/`             | The base URL that is going to be used for Shipping API connections.           |
-| **UPS_DOCUMENT_BASE_URL** | `str` | `https://filexfer.ups.com/rest/PaperlessDocumentAPI/` | The base URL that is going to be used for Paperless Document API connections. |
-| **UPS_ACCOUNT**           | `str` | `None`                                                | The number of the UPS account to use.                                         |
-| **UPS_LICENSE**           | `str` | `None`                                                | The UPS API license to be used for authentication.                            |
-| **UPS_USERNAME**          | `str` | `None`                                                | The UPS API username to be used for authentication                            |
-| **UPS_PASSWORD**          | `str` | `None`                                                | The UPS API password to be used for authentication                            |
+| Name                          | Type  | Default                                               | Description                                                                   |
+| ----------------------------- | ----- | ----------------------------------------------------- | ----------------------------------------------------------------------------- |
+| **UPS_DOCUMENT_BASE_URL**     | `str` | `https://filexfer.ups.com/rest/PaperlessDocumentAPI/` | The base URL that is going to be used for Paperless Document API connections. |
+| **UPS_LOCATOR_BASE_URL**      | `str` | `https://onlinetools.ups.com/ups.app/xml/Locator/`    | The base URL that is going to be used for Locator API connections.            |
+| **UPS_PICKUP_BASE_URL**       | `str` | `https://onlinetools.ups.com/ship/v1707/pickups/`     | The base URL that is going to be used for Pickup API connections.             |
+| **UPS_SHIPPING_BASE_URL**     | `str` | `https://onlinetools.ups.com/ship/v1807/`             | The base URL that is going to be used for Shipping API connections.           |
+| **UPS_TRACKING_BASE_URL**     | `str` | `https://onlinetools.ups.com/track/v1/`               | The base URL that is going to be used for Tracking API connections.           |
+| **UPS_TRACKING_XML_BASE_URL** | `str` | `https://onlinetools.ups.com/ups.app/xml/Track/`      | The base URL that is going to be used for Tracking XML-based API connections. |
+| **UPS_ACCOUNT**               | `str` | `None`                                                | The number of the UPS account to use.                                         |
+| **UPS_LICENSE**               | `str` | `None`                                                | The UPS API license to be used for authentication.                            |
+| **UPS_USERNAME**              | `str` | `None`                                                | The UPS API username to be used for authentication                            |
+| **UPS_PASSWORD**              | `str` | `None`                                                | The UPS API password to be used for authentication                            |
 
 ## License
 
