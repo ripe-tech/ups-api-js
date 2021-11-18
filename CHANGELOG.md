@@ -9,7 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-*
+* UPS Locator API support to find nearest Access Point - [#10](https://github.com/ripe-tech/ups-api-js/pull/10)
+* UPS Pickup API support to schedule pickups - [#13](https://github.com/ripe-tech/ups-api-js/pull/13)
+* Label recovery endpoint to retrieve labels in multiple formats - [#12](https://github.com/ripe-tech/ups-api-js/pull/12)
 
 ### Changed
 
@@ -17,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-*
+* Package description - [#9](https://github.com/ripe-tech/ups-api-js/pull/9)
 
 ## [0.2.2] - 2021-10-18
 
