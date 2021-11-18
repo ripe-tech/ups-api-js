@@ -10,7 +10,8 @@ const DOCUMENT_BASE_URL = "https://filexfer.ups.com/rest/PaperlessDocumentAPI/";
 const LOCATOR_BASE_URL = "https://onlinetools.ups.com/ups.app/xml/Locator/";
 const PICKUP_BASE_URL = "https://onlinetools.ups.com/ship/v1707/pickups/";
 const SHIPPING_BASE_URL = "https://onlinetools.ups.com/ship/v1807/";
-const TRACKING_BASE_URL = "https://onlinetools.ups.com/ups.app/xml/Track";
+const TRACKING_BASE_URL = "https://onlinetools.ups.com/track/v1/";
+const TRACKING_XML_BASE_URL = "https://onlinetools.ups.com/ups.app/xml/Track/";
 
 export class API extends mix(BaseAPI).with(
     DocumentAPI,
@@ -26,6 +27,7 @@ export class API extends mix(BaseAPI).with(
         this.pickupBaseUrl = conf("UPS_PICKUP_BASE_URL", PICKUP_BASE_URL);
         this.shippingBaseUrl = conf("UPS_SHIPPING_BASE_URL", SHIPPING_BASE_URL);
         this.trackingBaseUrl = conf("UPS_TRACKING_BASE_URL", TRACKING_BASE_URL);
+        this.trackingXmlBaseUrl = conf("UPS_TRACKING_XML_BASE_URL", TRACKING_XML_BASE_URL);
         this.license = conf("UPS_LICENSE", null);
         this.username = conf("UPS_USERNAME", null);
         this.password = conf("UPS_PASSWORD", null);
@@ -143,13 +145,34 @@ export class API extends mix(BaseAPI).with(
 
     /**
      * Retrieves the pickup base URL, normalizing it according to
-     * the limitation of the UPS API.
+     * the limitations of the UPS API.
      *
-     * @returns {String} The normalized pickup base URL normalized and
-     * ready to be used by API calls.
+     * @returns {String} The normalized pickup base URL ready to be used by API calls.
      */
     _getPickupBaseUrl() {
         // removes the trailing slash, as the API doesn't handle it properly
         return this.pickupBaseUrl.slice(0, this.pickupBaseUrl.length - 1);
+    }
+
+    /**
+     * Retrieves the tracking base URL, normalizing it according to
+     * the limitations of the UPS API.
+     *
+     * @returns {String} The normalized tracking base URL ready to be used by API calls.
+     */
+    _getTrackingBaseUrl() {
+        // removes the trailing slash, as the API doesn't handle it properly
+        return this.trackingBaseUrl.slice(0, this.trackingBaseUrl.length - 1);
+    }
+
+    /**
+     * Retrieves the tracking XML base URL, normalizing it according to
+     * the limitations of the UPS API.
+     *
+     * @returns {String} The normalized tracking XML base URL ready to be used by API calls.
+     */
+    _getTrackingXmlBaseUrl() {
+        // removes the trailing slash, as the API doesn't handle it properly
+        return this.trackingXmlBaseUrl.slice(0, this.trackingXmlBaseUrl.length - 1);
     }
 }
