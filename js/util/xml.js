@@ -18,11 +18,11 @@ export const getXMLHeader = (username, password, license) => {
     verify(password, "Password must be defined");
     verify(license, "License must be defined");
 
-    return `<?xml version="1.0"?> 
-    <AccessRequest xml:lang="en-US"> 
-        <AccessLicenseNumber>${license}</AccessLicenseNumber> 
-        <UserId>${username}</UserId> 
-        <Password>${password}</Password> 
+    return `<?xml version="1.0"?>
+    <AccessRequest xml:lang="en-US">
+        <AccessLicenseNumber>${license}</AccessLicenseNumber>
+        <UserId>${username}</UserId>
+        <Password>${password}</Password>
     </AccessRequest>`;
 };
 
