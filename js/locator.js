@@ -3,32 +3,32 @@ import { getXMLHeader, xmlToJson } from "./util";
 export const LocatorAPI = superclass =>
     class extends superclass {
         async getNearestAccessPoint(addressLine, city, postalCode, countryCode, options = {}) {
-            const xmlRequest = this._buildNearestAccessPointRequest(
+            const data = this._buildNearestAccessPointPayload(
                 addressLine,
                 city,
                 postalCode,
                 countryCode,
                 options
             );
-            const response = await this.post(this.locatorBaseUrl, {
+            const response = await this.post(this._getLocatorBaseUrl(), {
                 kwargs: { auth: "headers" },
                 mime: "application/xml",
-                data: xmlRequest,
+                data: data,
                 ...options
             });
-            const xmlResponse = await response.text();
-            const jsonResponse = xmlToJson(xmlResponse);
-            return jsonResponse;
+            const xml = await response.text();
+            const result = xmlToJson(xml);
+            return result;
         }
 
-        _buildNearestAccessPointRequest(
+        _buildNearestAccessPointPayload(
             addressLine,
             city,
             postalCode,
             countryCode,
             { consignee = null, locale = "en_US", metric = true, radius = 150 } = {}
         ) {
-            const xmlRequest =
+            const xml =
                 getXMLHeader(this.username, this.password, this.license) +
                 `<?xml version="1.0"?>
                 <LocatorRequest>
@@ -64,6 +64,6 @@ export const LocatorAPI = superclass =>
                         </AccessPointSearch>
                     </LocationSearchCriteria>
                 </LocatorRequest>`;
-            return xmlRequest;
+            return xml;
         }
     };
