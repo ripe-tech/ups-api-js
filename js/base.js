@@ -22,6 +22,7 @@ export class API extends mix(BaseAPI).with(
 ) {
     constructor(kwargs = {}) {
         super(kwargs);
+
         this.documentBaseUrl = conf("UPS_DOCUMENT_BASE_URL", DOCUMENT_BASE_URL);
         this.locatorBaseUrl = conf("UPS_LOCATOR_BASE_URL", LOCATOR_BASE_URL);
         this.pickupBaseUrl = conf("UPS_PICKUP_BASE_URL", PICKUP_BASE_URL);
@@ -32,12 +33,21 @@ export class API extends mix(BaseAPI).with(
         this.username = conf("UPS_USERNAME", null);
         this.password = conf("UPS_PASSWORD", null);
         this.transactionSrc = conf("UPS_TRANSACTION_SRC", null);
-        this.shippingBaseUrl =
-            kwargs.shippingBaseUrl === undefined ? this.shippingBaseUrl : kwargs.shippingBaseUrl;
+
         this.documentBaseUrl =
             kwargs.documentBaseUrl === undefined ? this.documentBaseUrl : kwargs.documentBaseUrl;
+        this.locatorBaseUrl =
+            kwargs.locatorBaseUrl === undefined ? this.locatorBaseUrl : kwargs.locatorBaseUrl;
+        this.pickupBaseUrl =
+            kwargs.pickupBaseUrl === undefined ? this.pickupBaseUrl : kwargs.pickupBaseUrl;
+        this.shippingBaseUrl =
+            kwargs.shippingBaseUrl === undefined ? this.shippingBaseUrl : kwargs.shippingBaseUrl;
         this.trackingBaseUrl =
             kwargs.trackingBaseUrl === undefined ? this.trackingBaseUrl : kwargs.trackingBaseUrl;
+        this.trackingXmlBaseUrl =
+            kwargs.trackingXmlBaseUrl === undefined
+                ? this.trackingXmlBaseUrl
+                : kwargs.trackingXmlBaseUrl;
         this.license = kwargs.license === undefined ? this.license : kwargs.license;
         this.username = kwargs.username === undefined ? this.username : kwargs.username;
         this.password = kwargs.password === undefined ? this.password : kwargs.password;
