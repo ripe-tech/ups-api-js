@@ -22,7 +22,6 @@ export class API extends mix(BaseAPI).with(
 ) {
     constructor(kwargs = {}) {
         super(kwargs);
-
         this.documentBaseUrl = conf("UPS_DOCUMENT_BASE_URL", DOCUMENT_BASE_URL);
         this.locatorBaseUrl = conf("UPS_LOCATOR_BASE_URL", LOCATOR_BASE_URL);
         this.pickupBaseUrl = conf("UPS_PICKUP_BASE_URL", PICKUP_BASE_URL);
@@ -33,7 +32,6 @@ export class API extends mix(BaseAPI).with(
         this.username = conf("UPS_USERNAME", null);
         this.password = conf("UPS_PASSWORD", null);
         this.transactionSrc = conf("UPS_TRANSACTION_SRC", null);
-
         this.documentBaseUrl =
             kwargs.documentBaseUrl === undefined ? this.documentBaseUrl : kwargs.documentBaseUrl;
         this.locatorBaseUrl =
