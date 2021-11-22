@@ -19,6 +19,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 *
 
+## [0.3.1] - 2021-11-22
+
+* Allow UPS API endpoint change through constructor params
+
 ## [0.3.0] - 2021-11-19
 
 ### Added
