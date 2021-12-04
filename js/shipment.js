@@ -1,17 +1,17 @@
 /*
  * The code representing an express shipment.
  */
-export const EXPRESS_SERVICE_CODE = "07";
+export const EXPRESS_SERVICE_CODE = "007";
 
 /*
  * The code representing a standard shipment.
  */
-export const STANDARD_SERVICE_CODE = "11";
+export const STANDARD_SERVICE_CODE = "011";
 
 /*
  * The code representing a saver shipment.
  */
-export const SAVER_SERVICE_CODE = "65";
+export const SAVER_SERVICE_CODE = "065";
 
 /*
  * The code representing a shipment that is

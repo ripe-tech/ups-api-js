@@ -6,7 +6,9 @@ describe("API", function() {
         const api = new ups.API();
         assert.strictEqual(Boolean(api.documentBaseUrl), true);
         assert.strictEqual(Boolean(api.locatorBaseUrl), true);
+        assert.strictEqual(Boolean(api.pickupBaseUrl), true);
         assert.strictEqual(Boolean(api.shippingBaseUrl), true);
         assert.strictEqual(Boolean(api.trackingBaseUrl), true);
+        assert.strictEqual(Boolean(api.trackingXmlBaseUrl), true);
     });
 });
