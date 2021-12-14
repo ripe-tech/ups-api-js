@@ -42,6 +42,11 @@ export const EXPRESS_BOX_PACKAGING_TYPE = "21";
  */
 export const KGS_TYPE = "KGS";
 
+/**
+ * Represents pounds.
+ */
+export const LBS_TYPE = "LBS";
+
 export const ShipmentAPI = superclass =>
     class extends superclass {
         async createShipment(payload, options = {}) {
