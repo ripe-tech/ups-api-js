@@ -19,6 +19,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 *
 
+## [0.3.2] - 2021-12-15
+
+### Added
+
+* Added `pounds` weight measurement code
+
+### Fixed
+
+* Fix UPS service codes to work with the Pickup API
+
 ## [0.3.1] - 2021-11-22
 
 * Allow UPS API endpoint change through constructor params
