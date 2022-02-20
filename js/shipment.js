@@ -47,6 +47,53 @@ export const KGS_TYPE = "KGS";
  */
 export const LBS_TYPE = "LBS";
 
+/**
+ * The code for a shipment to hold at an UPS Access Point.
+ */
+export const SHIPMENT_HOLD_ACCESS_POINT = "01";
+
+/**
+ * The code for the PRL UPS return service.
+ */
+export const RETURN_PRL = "9";
+
+/**
+ * The code to send an in transit email notification.
+ */
+export const NOTIFY_IN_TRANSIT = "5";
+
+/**
+ * The code to send a package shipped email notification.
+ */
+export const NOTIFY_SHIP = "6";
+
+/**
+ * The code to send exception email notifications.
+ */
+export const NOTIFY_EXCEPTION = "7";
+
+/**
+ * The code to send a package delivered email notification.
+ */
+export const NOTIFY_DELIVERY = "8";
+
+/**
+ * The code to send a delivery email notification when the package is at the Access Point.
+ */
+export const NOTIFY_ACCESS_POINT_DELIVERY = "012";
+
+/**
+ * The code for a purchase order code value to
+ * be used in reference number specification.
+ */
+export const PURCHASE_ORDER = "PO";
+
+/**
+ * The code for a production code code value to
+ * be used in reference number specification.
+ */
+export const PRODUCTION_CODE = "PC";
+
 export const ShipmentAPI = superclass =>
     class extends superclass {
         async createShipment(payload, options = {}) {
