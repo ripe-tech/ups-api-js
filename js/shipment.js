@@ -106,6 +106,15 @@ export const ShipmentAPI = superclass =>
             return response;
         }
 
+        async cancelShipment(trackingNumber, options = {}) {
+            const url = `${this.shippingBaseUrl}shipments/cancel/${trackingNumber}`;
+            const response = await this.delete(url, {
+                kwargs: { auth: "headers" },
+                ...options
+            });
+            return response;
+        }
+
         async addDocumentShipment(payload, options = {}) {
             const url = this._getDocumentBaseUrl();
             const response = await this.post(url, {
