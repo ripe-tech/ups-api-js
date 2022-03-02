@@ -9,7 +9,7 @@ import { TrackingAPI } from "./tracking";
 const DOCUMENT_BASE_URL = "https://filexfer.ups.com/rest/PaperlessDocumentAPI/";
 const LOCATOR_BASE_URL = "https://onlinetools.ups.com/ups.app/xml/Locator/";
 const PICKUP_BASE_URL = "https://onlinetools.ups.com/ship/v1707/pickups/";
-const SHIPPING_BASE_URL = "https://onlinetools.ups.com/ship/v1807/";
+const SHIPPING_BASE_URL = "https://onlinetools.ups.com/ship/v1/";
 const TRACKING_BASE_URL = "https://onlinetools.ups.com/track/v1/";
 const TRACKING_XML_BASE_URL = "https://onlinetools.ups.com/ups.app/xml/Track/";
 
