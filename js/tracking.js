@@ -1,5 +1,35 @@
 import { getXMLHeader, xmlToJson } from "./util";
 
+/**
+ * Shipment was picked up.
+ */
+export const STATUS_PICKUP = "P";
+
+/**
+ * Shipment out for delivery.
+ */
+export const STATUS_OUT_FOR_DELIVERY = "O";
+
+/**
+ * Shipment in transit.
+ */
+export const STATUS_IN_TRANSIT = "I";
+
+/**
+ * Shipment exception.
+ */
+export const STATUS_EXCEPTION = "X";
+
+/**
+ * Shipment delivered.
+ */
+export const STATUS_DELIVERED = "D";
+
+/**
+ * Shipment returned to shipper.
+ */
+export const STATUS_RETURNED = "RS";
+
 export const TrackingAPI = superclass =>
     class extends superclass {
         getTrackingUrl(trackingNumber) {
