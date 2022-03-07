@@ -1,6 +1,6 @@
 {
     "name": "ups-api",
-    "version": "0.4.0",
+    "version": "0.4.1",
     "description": "The RIPE UPS API client",
     "keywords": [
         "api",
@@ -45,7 +45,7 @@
     },
     "dependencies": {
         "xml-js": "^1.6.11",
-        "yonius": "^0.6.5"
+        "yonius": "^0.11.5"
     },
     "devDependencies": {
         "@babel/core": "^7.12.10",
