@@ -2,6 +2,20 @@
 
 The Javascript version of the UPS Shipping service.
 
+```javascript
+const upsApi = require("ups-api");
+
+// instance the API client with defaults
+const api = new upsApi.API({
+    username: "myupsaccount",
+    password: "myupsaccountpassword",
+    license: "3F9955C3F789C255"
+});
+
+// example: request tracking information
+const tracking = await api.getTrackingDetails("7798339175");
+```
+
 ## Configuration
 
 | Name                          | Type  | Default                                               | Description                                                                   |

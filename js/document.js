@@ -17,6 +17,15 @@ export const DECLARATION_DOC_TYPE = "013";
 
 export const DocumentAPI = superclass =>
     class extends superclass {
+        /**
+         * Uploads a document to the UPS servers.
+         * The uploaded document is returned and its ID can be
+         * used to associate a shipment with the document.
+         *
+         * @param {Object} payload The payload object according to the UPS API standards.
+         * @param {Object} options An object of options to configure the request.
+         * @returns {Object} The HTTP response object.
+         */
         async createDocument(payload, options = {}) {
             const url = this._getDocumentBaseUrl();
             const response = await this.post(url, {
