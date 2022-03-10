@@ -102,6 +102,7 @@ export const ShipmentAPI = superclass =>
          * @param {Object} payload The payload object according to the UPS API standards.
          * @param {Object} options An object of options to configure the request.
          * @returns {Object} The HTTP response object.
+         * @see https://www.ups.com/upsdeveloperkit?loc=en_US
          */
         async createShipment(payload, options = {}) {
             const url = this.shippingBaseUrl + "shipments";
@@ -119,6 +120,7 @@ export const ShipmentAPI = superclass =>
          * @param {String} trackingNumber The tracking number of the shipment/waybill.
          * @param {Object} options An object of options to configure the request.
          * @returns {Object} The HTTP response object.
+         * @see https://www.ups.com/upsdeveloperkit?loc=en_US
          */
         async cancelShipment(trackingNumber, options = {}) {
             const url = `${this.shippingBaseUrl}shipments/cancel/${trackingNumber}`;
@@ -136,6 +138,7 @@ export const ShipmentAPI = superclass =>
          * @param {Object} payload The payload object according to the UPS API standards.
          * @param {Object} options An object of options to configure the request.
          * @returns {Object} The HTTP response object.
+         * @see https://www.ups.com/upsdeveloperkit?loc=en_US
          */
         async addDocumentShipment(payload, options = {}) {
             const url = this._getDocumentBaseUrl();
@@ -153,6 +156,7 @@ export const ShipmentAPI = superclass =>
          * @param {String} trackingNumber The tracking number of the shipment/waybill.
          * @param {Object} options An object of options to configure the request.
          * @returns {Object} The HTTP response object.
+         * @see https://www.ups.com/upsdeveloperkit?loc=en_US
          */
         async getWaybill(trackingNumber, { format = "pdf", ...options } = {}) {
             const url = this.shippingBaseUrl + "shipments/labels";

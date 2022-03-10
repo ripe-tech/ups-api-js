@@ -25,6 +25,7 @@ export const DocumentAPI = superclass =>
          * @param {Object} payload The payload object according to the UPS API standards.
          * @param {Object} options An object of options to configure the request.
          * @returns {Object} The HTTP response object.
+         * @see https://www.ups.com/upsdeveloperkit?loc=en_US
          */
         async createDocument(payload, options = {}) {
             const url = this._getDocumentBaseUrl();

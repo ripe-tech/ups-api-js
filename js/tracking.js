@@ -37,6 +37,7 @@ export const TrackingAPI = superclass =>
          *
          * @param {String} trackingNumber The tracking number of the shipment/waybill.
          * @returns {String} The tracking URL.
+         * @see https://www.ups.com/upsdeveloperkit?loc=en_US
          */
         getTrackingUrl(trackingNumber) {
             return `http://wwwapps.ups.com/WebTracking/processInputRequest?TypeOfInquiryNumber=T&InquiryNumber1=${trackingNumber}`;
@@ -48,6 +49,7 @@ export const TrackingAPI = superclass =>
          * @param {String} trackingNumber The tracking number of the shipment/waybill.
          * @param {Object} options An object of options to configure the request.
          * @returns {Object} The HTTP response object.
+         * @see https://www.ups.com/upsdeveloperkit?loc=en_US
          */
         async getTrackingDetails(trackingNumber, options = {}) {
             const url = `${this.trackingBaseUrl}details/${trackingNumber}`;
@@ -66,6 +68,7 @@ export const TrackingAPI = superclass =>
          * @param {String} trackingNumber The tracking number of the shipment/waybill.
          * @param {Object} options An object of options to configure the request.
          * @returns {Object} The HTTP response object.
+         * @see https://www.ups.com/upsdeveloperkit?loc=en_US
          */
         async getTrackingDetailsExtended(trackingNumber, options = {}) {
             const data = this._buildTrackingPayload(trackingNumber);
