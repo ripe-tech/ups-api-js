@@ -32,10 +32,25 @@ export const STATUS_RETURNED = "RS";
 
 export const TrackingAPI = superclass =>
     class extends superclass {
+        /**
+         * Gets the tracking URL given a tracking number.
+         *
+         * @param {String} trackingNumber The tracking number of the shipment/waybill.
+         * @returns {String} The tracking URL.
+         * @see https://www.ups.com/upsdeveloperkit?loc=en_US
+         */
         getTrackingUrl(trackingNumber) {
             return `http://wwwapps.ups.com/WebTracking/processInputRequest?TypeOfInquiryNumber=T&InquiryNumber1=${trackingNumber}`;
         }
 
+        /**
+         * Gets the tracking information for an existing shipment.
+         *
+         * @param {String} trackingNumber The tracking number of the shipment/waybill.
+         * @param {Object} options An object of options to configure the request.
+         * @returns {Object} The HTTP response object.
+         * @see https://www.ups.com/upsdeveloperkit?loc=en_US
+         */
         async getTrackingDetails(trackingNumber, options = {}) {
             const url = `${this.trackingBaseUrl}details/${trackingNumber}`;
             const response = await this.get(url, {
@@ -45,6 +60,16 @@ export const TrackingAPI = superclass =>
             return response;
         }
 
+        /**
+         * Gets the tracking information for an existing shipment.
+         * This method retrieves the complete set of information related with
+         * this shipment.
+         *
+         * @param {String} trackingNumber The tracking number of the shipment/waybill.
+         * @param {Object} options An object of options to configure the request.
+         * @returns {Object} The HTTP response object.
+         * @see https://www.ups.com/upsdeveloperkit?loc=en_US
+         */
         async getTrackingDetailsExtended(trackingNumber, options = {}) {
             const data = this._buildTrackingPayload(trackingNumber);
             const response = await this.post(this._getTrackingXmlBaseUrl(), {

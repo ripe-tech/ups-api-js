@@ -96,6 +96,14 @@ export const PRODUCTION_CODE = "PC";
 
 export const ShipmentAPI = superclass =>
     class extends superclass {
+        /**
+         * Creates a shipment and associated UPS waybill.
+         *
+         * @param {Object} payload The payload object according to the UPS API standards.
+         * @param {Object} options An object of options to configure the request.
+         * @returns {Object} The HTTP response object.
+         * @see https://www.ups.com/upsdeveloperkit?loc=en_US
+         */
         async createShipment(payload, options = {}) {
             const url = this.shippingBaseUrl + "shipments";
             const response = await this.post(url, {
@@ -106,6 +114,14 @@ export const ShipmentAPI = superclass =>
             return response;
         }
 
+        /**
+         * Cancels (voids) an existing shipment and associated UPS waybill.
+         *
+         * @param {String} trackingNumber The tracking number of the shipment/waybill.
+         * @param {Object} options An object of options to configure the request.
+         * @returns {Object} The HTTP response object.
+         * @see https://www.ups.com/upsdeveloperkit?loc=en_US
+         */
         async cancelShipment(trackingNumber, options = {}) {
             const url = `${this.shippingBaseUrl}shipments/cancel/${trackingNumber}`;
             const response = await this.delete(url, {
@@ -115,6 +131,15 @@ export const ShipmentAPI = superclass =>
             return response;
         }
 
+        /**
+         * Adds the already uploaded documents in the UPS servers to an
+         * existing shipment.
+         *
+         * @param {Object} payload The payload object according to the UPS API standards.
+         * @param {Object} options An object of options to configure the request.
+         * @returns {Object} The HTTP response object.
+         * @see https://www.ups.com/upsdeveloperkit?loc=en_US
+         */
         async addDocumentShipment(payload, options = {}) {
             const url = this._getDocumentBaseUrl();
             const response = await this.post(url, {
@@ -125,6 +150,14 @@ export const ShipmentAPI = superclass =>
             return response;
         }
 
+        /**
+         * Gets the waybill for an existing shipment.
+         *
+         * @param {String} trackingNumber The tracking number of the shipment/waybill.
+         * @param {Object} options An object of options to configure the request.
+         * @returns {Object} The HTTP response object.
+         * @see https://www.ups.com/upsdeveloperkit?loc=en_US
+         */
         async getWaybill(trackingNumber, { format = "pdf", ...options } = {}) {
             const url = this.shippingBaseUrl + "shipments/labels";
             const response = await this.post(url, {
