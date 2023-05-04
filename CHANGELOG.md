@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-*
+* Remove Travis CI - [products/#97](https://github.com/ripe-tech/products/issues/97)
 
 ### Fixed
 
