@@ -94,6 +94,27 @@ export const PURCHASE_ORDER = "PO";
  */
 export const PRODUCTION_CODE = "PC";
 
+/**
+ * The code for reason for export.
+ */
+export const REASON_FOR_EXPORT = {
+    SALE: "SALE",
+    GIFT: "GIFT",
+    SAMPLE: "SAMPLE",
+    RETURN: "RETURN",
+    REPAIR: "REPAIR",
+    INTERCOMPANY_DATA: "INTERCOMPANYDATA",
+    ANY: "Any other reason"
+};
+
+/**
+ * The code for form types to be used in international shipping.
+ */
+export const INTERNATIONAL_FORM_TYPE = {
+    USER_CREATED_FORM: "07",
+    FULL_INVOICE: "01"
+};
+
 export const ShipmentAPI = superclass =>
     class extends superclass {
         /**
