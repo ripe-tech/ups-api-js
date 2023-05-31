@@ -8,7 +8,7 @@ jobs:
     name: Deploy
     strategy:
       matrix:
-        node-version: [14, 16, 18, 20]
+        node-version: [14]
     runs-on: ubuntu-latest
     container: node:${{ matrix.node-version }}
     steps:
