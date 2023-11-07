@@ -1,5 +1,3 @@
-import { getXMLHeader, xmlToJson } from "./util";
-
 /**
  * Shipment was picked up.
  */
