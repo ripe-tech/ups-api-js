@@ -6,12 +6,10 @@ import { PickupAPI } from "./pickup";
 import { ShipmentAPI } from "./shipment";
 import { TrackingAPI } from "./tracking";
 
-const DOCUMENT_BASE_URL = "https://filexfer.ups.com/rest/PaperlessDocumentAPI/";
-const LOCATOR_BASE_URL = "https://onlinetools.ups.com/ups.app/xml/Locator/";
-const PICKUP_BASE_URL = "https://onlinetools.ups.com/ship/v1707/pickups/";
-const SHIPPING_BASE_URL = "https://onlinetools.ups.com/ship/v1/";
-const TRACKING_BASE_URL = "https://onlinetools.ups.com/track/v1/";
-const TRACKING_XML_BASE_URL = "https://onlinetools.ups.com/ups.app/xml/Track/";
+const AUTH_URL = "https://wwwcie.ups.com/";
+const BASE_URL = "https://wwwcie.ups.com/api/";
+const API_VERSION = "v1";
+const GRANT_TYPE = "client_credentials";
 
 export class API extends mix(BaseAPI).with(
     DocumentAPI,
@@ -22,33 +20,23 @@ export class API extends mix(BaseAPI).with(
 ) {
     constructor(kwargs = {}) {
         super(kwargs);
-        this.documentBaseUrl = conf("UPS_DOCUMENT_BASE_URL", DOCUMENT_BASE_URL);
-        this.locatorBaseUrl = conf("UPS_LOCATOR_BASE_URL", LOCATOR_BASE_URL);
-        this.pickupBaseUrl = conf("UPS_PICKUP_BASE_URL", PICKUP_BASE_URL);
-        this.shippingBaseUrl = conf("UPS_SHIPPING_BASE_URL", SHIPPING_BASE_URL);
-        this.trackingBaseUrl = conf("UPS_TRACKING_BASE_URL", TRACKING_BASE_URL);
-        this.trackingXmlBaseUrl = conf("UPS_TRACKING_XML_BASE_URL", TRACKING_XML_BASE_URL);
-        this.license = conf("UPS_LICENSE", null);
-        this.username = conf("UPS_USERNAME", null);
-        this.password = conf("UPS_PASSWORD", null);
+
+        this.authUrl = conf("UPS_AUTH_URL", AUTH_URL);
+        this.baseUrl = conf("UPS_BASE_URL", BASE_URL);
+        this.version = conf("UPS_API_VERSION", API_VERSION);
+        this.clientId = conf("UPS_CLIENT_ID", null);
+        this.clientSecret = conf("UPS_CLIENT_SECRET", null);
+        this.token = conf("UPS_TOKEN", null);
+        this.grantType = conf("UPS_GRANT_TYPE", GRANT_TYPE);
         this.transactionSrc = conf("UPS_TRANSACTION_SRC", null);
-        this.documentBaseUrl =
-            kwargs.documentBaseUrl === undefined ? this.documentBaseUrl : kwargs.documentBaseUrl;
-        this.locatorBaseUrl =
-            kwargs.locatorBaseUrl === undefined ? this.locatorBaseUrl : kwargs.locatorBaseUrl;
-        this.pickupBaseUrl =
-            kwargs.pickupBaseUrl === undefined ? this.pickupBaseUrl : kwargs.pickupBaseUrl;
-        this.shippingBaseUrl =
-            kwargs.shippingBaseUrl === undefined ? this.shippingBaseUrl : kwargs.shippingBaseUrl;
-        this.trackingBaseUrl =
-            kwargs.trackingBaseUrl === undefined ? this.trackingBaseUrl : kwargs.trackingBaseUrl;
-        this.trackingXmlBaseUrl =
-            kwargs.trackingXmlBaseUrl === undefined
-                ? this.trackingXmlBaseUrl
-                : kwargs.trackingXmlBaseUrl;
-        this.license = kwargs.license === undefined ? this.license : kwargs.license;
-        this.username = kwargs.username === undefined ? this.username : kwargs.username;
-        this.password = kwargs.password === undefined ? this.password : kwargs.password;
+
+        this.authUrl = kwargs.authUrl === undefined ? this.authUrl : kwargs.authUrl;
+        this.baseUrl = kwargs.baseUrl === undefined ? this.baseUrl : kwargs.baseUrl;
+        this.version = kwargs.version === undefined ? this.version : kwargs.version;
+        this.clientId = kwargs.clientId === undefined ? this.clientId : kwargs.clientId;
+        this.clientSecret =
+            kwargs.clientSecret === undefined ? this.clientSecret : kwargs.clientSecret;
+        this.token = kwargs.token === undefined ? this.token : kwargs.token;
         this.transactionSrc =
             kwargs.transactionSrc === undefined ? this.transactionSrc : kwargs.transactionSrc;
     }
@@ -59,35 +47,37 @@ export class API extends mix(BaseAPI).with(
 
     async build(method, url, options = {}) {
         await super.build(method, url, options);
-        options.kwargs = options.kwargs !== undefined ? options.kwargs : {};
-        const auth = options.kwargs.auth;
-        delete options.kwargs.auth;
-
-        // determines the kind of authentication method to be used and
-        // changes the corresponding header or data payload
-        switch (auth) {
-            case "headers":
-                options.headers = options.params !== undefined ? options.headers : {};
-                options.headers.AccessLicenseNumber = this.license;
-                if (this.username) options.headers.Username = this.username;
-                if (this.password) options.headers.Password = this.password;
-                break;
-            case "dataJ":
-                options.dataJ = options.dataJ !== undefined ? options.dataJ : {};
-                options.dataJ.UPSSecurity = options.dataJ.UPSSecurity || {
-                    UsernameToken: {
-                        Username: this.username,
-                        Password: this.password
-                    },
-                    ServiceAccessToken: {
-                        AccessLicenseNumber: this.license
-                    }
-                };
-                break;
-        }
 
         const transactionSrc = options.headers.transactionSrc || this.transactionSrc;
         if (transactionSrc) options.headers.transactionSrc = transactionSrc;
+    }
+
+    async authCallback(params, headers) {
+        // forces the refetch of the authorization
+        // token from the auth API
+        this.token = null;
+        await this.getToken();
+
+        headers.Authorization = this._bearerHeader();
+    }
+
+    async getToken() {
+        if (this.token) return this.token;
+
+        const url = `${this.authUrl}security/${this.version}/oauth/token`;
+        const data = `grant_type=${this.grantType}`;
+        const options = {
+            headers: {
+                Authorization: this._basicHeader()
+            },
+            data: data,
+            mime: "application/x-www-form-urlencoded"
+        };
+        const contents = await this.post(url, options);
+
+        console.log(contents);
+        this.token = contents.access_token;
+        return this.token;
     }
 
     async _handleResponse(response, errorMessage = "Problem in request") {
@@ -129,58 +119,12 @@ export class API extends mix(BaseAPI).with(
         return result;
     }
 
-    /**
-     * Retrieves the document base URL, normalizing it according to
-     * the limitations of the UPS API.
-     *
-     * @returns {String} The normalized document base URL ready to be used by API calls.
-     */
-    _getDocumentBaseUrl() {
-        // removes the trailing slash, as the API doesn't handle it properly
-        return this.documentBaseUrl.slice(0, this.documentBaseUrl.length - 1);
+    _basicHeader() {
+        const auth = Buffer.from(`${this.clientId}:${this.clientSecret}`).toString("base64");
+        return `Basic ${auth}`;
     }
 
-    /**
-     * Retrieves the locator base URL, normalizing it according to
-     * the limitations of the UPS API.
-     *
-     * @returns {String} The normalized locator base URL ready to be used by API calls.
-     */
-    _getLocatorBaseUrl() {
-        // removes the trailing slash, as the API doesn't handle it properly
-        return this.locatorBaseUrl.slice(0, this.locatorBaseUrl.length - 1);
-    }
-
-    /**
-     * Retrieves the pickup base URL, normalizing it according to
-     * the limitations of the UPS API.
-     *
-     * @returns {String} The normalized pickup base URL ready to be used by API calls.
-     */
-    _getPickupBaseUrl() {
-        // removes the trailing slash, as the API doesn't handle it properly
-        return this.pickupBaseUrl.slice(0, this.pickupBaseUrl.length - 1);
-    }
-
-    /**
-     * Retrieves the tracking base URL, normalizing it according to
-     * the limitations of the UPS API.
-     *
-     * @returns {String} The normalized tracking base URL ready to be used by API calls.
-     */
-    _getTrackingBaseUrl() {
-        // removes the trailing slash, as the API doesn't handle it properly
-        return this.trackingBaseUrl.slice(0, this.trackingBaseUrl.length - 1);
-    }
-
-    /**
-     * Retrieves the tracking XML base URL, normalizing it according to
-     * the limitations of the UPS API.
-     *
-     * @returns {String} The normalized tracking XML base URL ready to be used by API calls.
-     */
-    _getTrackingXmlBaseUrl() {
-        // removes the trailing slash, as the API doesn't handle it properly
-        return this.trackingXmlBaseUrl.slice(0, this.trackingXmlBaseUrl.length - 1);
+    _bearerHeader() {
+        return `Bearer ${this.token}`;
     }
 }
