@@ -12,10 +12,14 @@ export const LocatorAPI = superclass =>
          * @see https://www.ups.com/upsdeveloperkit?loc=en_US
          */
         async getNearestAccessPoint(addressLine, city, postalCode, countryCode, options = {}) {
-            return {
-                LocatorResponse: {
-                    SearchResults: {}
-                }
+            const response = {
+                errors: [
+                    {
+                        code: 500,
+                        message: "Not implemented by UPS API Client"
+                    }
+                ]
             };
+            return response;
         }
     };

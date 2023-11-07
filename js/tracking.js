@@ -55,14 +55,14 @@ export const TrackingAPI = superclass =>
          * @see https://www.ups.com/upsdeveloperkit?loc=en_US
          */
         async getTrackingDetailsExtended(trackingNumber, options = {}) {
-            return {
-                TrackResponse: {
-                    Response: {
-                        Error: {
-                            Message: "Not Implemented By UPS API Client"
-                        }
+            const response = {
+                errors: [
+                    {
+                        code: 500,
+                        message: "Not implemented by UPS API Client"
                     }
-                }
+                ]
             };
+            return response;
         }
     };
