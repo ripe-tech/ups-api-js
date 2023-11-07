@@ -2,6 +2,7 @@ import { API as BaseAPI, mix, load, conf, verify } from "yonius";
 
 import { DocumentAPI } from "./document";
 import { LocatorAPI } from "./locator";
+import { PaperlessAPI } from "./paperless";
 import { PickupAPI } from "./pickup";
 import { ShipmentAPI } from "./shipment";
 import { TrackingAPI } from "./tracking";
@@ -14,6 +15,7 @@ const GRANT_TYPE = "client_credentials";
 export class API extends mix(BaseAPI).with(
     DocumentAPI,
     LocatorAPI,
+    PaperlessAPI,
     PickupAPI,
     ShipmentAPI,
     TrackingAPI
@@ -73,10 +75,10 @@ export class API extends mix(BaseAPI).with(
             data: data,
             mime: "application/x-www-form-urlencoded"
         };
-        const contents = await this.post(url, options);
 
-        console.log(contents);
+        const contents = await this.post(url, options);
         this.token = contents.access_token;
+
         return this.token;
     }
 
