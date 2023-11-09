@@ -19,7 +19,7 @@ const tracking = await api.getTrackingDetails("7798339175");
 
 | Name                    | Type  | Default                              | Description                                            |
 | ----------------------- | ----- | ------------------------------------ | ------------------------------------------------------ |
-| **UPS_AUTH_URL**        | `str` | `"https://onlinetools.ups.com/`      | The base auth URL used for the OAuth token request.    |
+| **UPS_AUTH_URL**        | `str` | `"https://onlinetools.ups.com/"`     | The base auth URL used for the OAuth token request.    |
 | **UPS_BASE_URL**        | `str` | `"https://onlinetools.ups.com/api/"` | The base URL used for API requests.                    |
 | **UPS_API_VERSION**     | `str` | `"v1"`                               | The version of the API to use.                         |
 | **UPS_CLIENT_ID**       | `str` | `None`                               | The application client ID to obtain the token.         |
