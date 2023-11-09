@@ -7,12 +7,12 @@ import { ShipmentAPI } from "./shipment";
 import { TrackingAPI } from "./tracking";
 
 /**
- * The base URL for the OAuth token request.
+ * The base auth URL used for the OAuth token request.
  */
 const AUTH_URL = "https://onlinetools.ups.com/";
 
 /**
- * The base URL for API requests.
+ * The base URL used for API requests.
  */
 const BASE_URL = "https://onlinetools.ups.com/api/";
 
@@ -41,8 +41,8 @@ export class API extends mix(BaseAPI).with(
         this.version = conf("UPS_API_VERSION", API_VERSION);
         this.clientId = conf("UPS_CLIENT_ID", null);
         this.clientSecret = conf("UPS_CLIENT_SECRET", null);
-        this.token = conf("UPS_TOKEN", null);
         this.grantType = conf("UPS_GRANT_TYPE", GRANT_TYPE);
+        this.token = conf("UPS_TOKEN", null);
         this.transactionSrc = conf("UPS_TRANSACTION_SRC", null);
 
         this.authUrl = kwargs.authUrl === undefined ? this.authUrl : kwargs.authUrl;
