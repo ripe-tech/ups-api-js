@@ -126,9 +126,8 @@ export const ShipmentAPI = superclass =>
          * @see https://www.ups.com/upsdeveloperkit?loc=en_US
          */
         async createShipment(payload, options = {}) {
-            const url = this.shippingBaseUrl + "shipments";
+            const url = `${this.baseUrl}shipments/${this.version}/ship`;
             const response = await this.post(url, {
-                kwargs: { auth: "headers" },
                 ...options,
                 dataJ: { ShipmentRequest: payload }
             });
@@ -144,30 +143,8 @@ export const ShipmentAPI = superclass =>
          * @see https://www.ups.com/upsdeveloperkit?loc=en_US
          */
         async cancelShipment(trackingNumber, options = {}) {
-            const url = `${this.shippingBaseUrl}shipments/cancel/${trackingNumber}`;
-            const response = await this.delete(url, {
-                kwargs: { auth: "headers" },
-                ...options
-            });
-            return response;
-        }
-
-        /**
-         * Adds the already uploaded documents in the UPS servers to an
-         * existing shipment.
-         *
-         * @param {Object} payload The payload object according to the UPS API standards.
-         * @param {Object} options An object of options to configure the request.
-         * @returns {Object} The HTTP response object.
-         * @see https://www.ups.com/upsdeveloperkit?loc=en_US
-         */
-        async addDocumentShipment(payload, options = {}) {
-            const url = this._getDocumentBaseUrl();
-            const response = await this.post(url, {
-                kwargs: { auth: "dataJ" },
-                ...options,
-                dataJ: { PushToImageRepositoryRequest: payload }
-            });
+            const url = `${this.baseUrl}shipments/${this.version}/void/cancel/${trackingNumber}`;
+            const response = await this.delete(url, options);
             return response;
         }
 
@@ -180,9 +157,8 @@ export const ShipmentAPI = superclass =>
          * @see https://www.ups.com/upsdeveloperkit?loc=en_US
          */
         async getWaybill(trackingNumber, { format = "pdf", ...options } = {}) {
-            const url = this.shippingBaseUrl + "shipments/labels";
+            const url = `${this.baseUrl}labels/${this.version}/recovery`;
             const response = await this.post(url, {
-                kwargs: { auth: "headers" },
                 ...options,
                 dataJ: {
                     LabelRecoveryRequest: {

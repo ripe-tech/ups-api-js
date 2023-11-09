@@ -44,7 +44,6 @@
         "watch": "rollup -c -w"
     },
     "dependencies": {
-        "xml-js": "^1.6.11",
         "yonius": "^0.11.5"
     },
     "devDependencies": {

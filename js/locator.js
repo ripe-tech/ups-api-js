@@ -1,4 +1,12 @@
-import { getXMLHeader, xmlToJson } from "./util";
+/**
+ * Option type for access point search.
+ */
+export const ACCESS_POINT_SEARCH = "64";
+
+/**
+ * Option type to sort by closest in search.
+ */
+export const CLOSEST_POINT_SEARCH = "01";
 
 export const LocatorAPI = superclass =>
     class extends superclass {
@@ -14,22 +22,19 @@ export const LocatorAPI = superclass =>
          * @see https://www.ups.com/upsdeveloperkit?loc=en_US
          */
         async getNearestAccessPoint(addressLine, city, postalCode, countryCode, options = {}) {
-            const data = this._buildNearestAccessPointPayload(
+            const url = `${this.baseUrl}locations/${this.version}/search/availabilities/${ACCESS_POINT_SEARCH}`;
+            const payload = this._buildNearestAccessPointPayload(
                 addressLine,
                 city,
                 postalCode,
                 countryCode,
                 options
             );
-            const response = await this.post(this._getLocatorBaseUrl(), {
-                kwargs: { auth: "headers" },
-                mime: "application/xml",
-                data: data,
-                ...options
+            const response = await this.post(url, {
+                ...options,
+                dataJ: payload
             });
-            const xml = await response.text();
-            const result = xmlToJson(xml);
-            return result;
+            return response;
         }
 
         _buildNearestAccessPointPayload(
@@ -39,42 +44,28 @@ export const LocatorAPI = superclass =>
             countryCode,
             { consignee = null, locale = "en_US", metric = true, radius = 150 } = {}
         ) {
-            const xml =
-                getXMLHeader(this.username, this.password, this.license) +
-                `<?xml version="1.0"?>
-                <LocatorRequest>
-                    <Request>
-                        <RequestAction>Locator</RequestAction>
-                        <RequestOption>64</RequestOption>
-                    </Request>
-                    <OriginAddress>
-                        <AddressKeyFormat>
-                            ${consignee ? `<ConsigneeName>${consignee}</ConsigneeName>` : ""}
-                            <AddressLine>${addressLine}</AddressLine>
-                            <PoliticalDivision2>${city}</PoliticalDivision2>
-                            <PostcodePrimaryLow>${postalCode}</PostcodePrimaryLow>
-                            <CountryCode>${countryCode}</CountryCode>
-                        </AddressKeyFormat>
-                    </OriginAddress>
-                    <Translate>
-                        <Locale>${locale}</Locale>
-                    </Translate>
-                    <UnitOfMeasurement>
-                        <Code>${metric ? "KM" : "MI"}</Code>
-                    </UnitOfMeasurement>
-                    <LocationSearchCriteria>
-                        <SearchOption>
-                            <OptionType>
-                                <Code>01</Code>
-                            </OptionType>
-                        </SearchOption>
-                        <MaximumListSize>1</MaximumListSize>
-                        <SearchRadius>${radius}</SearchRadius>
-                        <AccessPointSearch>
-                            <AccessPointStatus>01</AccessPointStatus>
-                        </AccessPointSearch>
-                    </LocationSearchCriteria>
-                </LocatorRequest>`;
-            return xml;
+            const payload = {
+                LocatorRequest: {
+                    Request: {
+                        RequestAction: "Locator",
+                        RequestOption: ACCESS_POINT_SEARCH
+                    },
+                    OriginAddress: {
+                        AddressKeyFormat: {
+                            ConsigneeName: consignee,
+                            AddressLine: addressLine,
+                            PoliticalDivision2: city,
+                            PostcodePrimaryLow: postalCode,
+                            CountryCode: countryCode
+                        }
+                    },
+                    Translate: {
+                        Locale: locale
+                    },
+                    UnitOfMeasurement: { Code: metric ? "KM" : "MI" },
+                    SortCriteria: { SortType: CLOSEST_POINT_SEARCH }
+                }
+            };
+            return payload;
         }
     };

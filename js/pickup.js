@@ -9,8 +9,8 @@ export const PickupAPI = superclass =>
          * @see https://www.ups.com/upsdeveloperkit?loc=en_US
          */
         async schedulePickup(payload, options = {}) {
-            const response = await this.post(this._getPickupBaseUrl(), {
-                kwargs: { auth: "headers" },
+            const url = `${this.baseUrl}pickupcreation/${this.version}/pickup`;
+            const response = await this.post(url, {
                 ...options,
                 dataJ: { PickupCreationRequest: payload }
             });

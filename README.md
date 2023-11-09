@@ -7,9 +7,8 @@ const upsApi = require("ups-api");
 
 // instance the API client with defaults
 const api = new upsApi.API({
-    username: "myupsaccount",
-    password: "myupsaccountpassword",
-    license: "3F9955C3F789C255"
+    clientId: "myUpsAppClientId",
+    clientSecret: "myUpsAppClientSecret"
 });
 
 // example: request tracking information
@@ -18,17 +17,16 @@ const tracking = await api.getTrackingDetails("7798339175");
 
 ## Configuration
 
-| Name                          | Type  | Default                                               | Description                                                                   |
-| ----------------------------- | ----- | ----------------------------------------------------- | ----------------------------------------------------------------------------- |
-| **UPS_DOCUMENT_BASE_URL**     | `str` | `https://filexfer.ups.com/rest/PaperlessDocumentAPI/` | The base URL that is going to be used for Paperless Document API connections. |
-| **UPS_LOCATOR_BASE_URL**      | `str` | `https://onlinetools.ups.com/ups.app/xml/Locator/`    | The base URL that is going to be used for Locator API connections.            |
-| **UPS_PICKUP_BASE_URL**       | `str` | `https://onlinetools.ups.com/ship/v1707/pickups/`     | The base URL that is going to be used for Pickup API connections.             |
-| **UPS_SHIPPING_BASE_URL**     | `str` | `https://onlinetools.ups.com/ship/v1807/`             | The base URL that is going to be used for Shipping API connections.           |
-| **UPS_TRACKING_BASE_URL**     | `str` | `https://onlinetools.ups.com/track/v1/`               | The base URL that is going to be used for Tracking API connections.           |
-| **UPS_TRACKING_XML_BASE_URL** | `str` | `https://onlinetools.ups.com/ups.app/xml/Track/`      | The base URL that is going to be used for Tracking XML-based API connections. |
-| **UPS_LICENSE**               | `str` | `None`                                                | The UPS API license to be used for authentication.                            |
-| **UPS_USERNAME**              | `str` | `None`                                                | The UPS API username to be used for authentication                            |
-| **UPS_PASSWORD**              | `str` | `None`                                                | The UPS API password to be used for authentication                            |
+| Name                    | Type  | Default                              | Description                                            |
+| ----------------------- | ----- | ------------------------------------ | ------------------------------------------------------ |
+| **UPS_AUTH_URL**        | `str` | `"https://onlinetools.ups.com/"`     | The base auth URL used for the OAuth token request.    |
+| **UPS_BASE_URL**        | `str` | `"https://onlinetools.ups.com/api/"` | The base URL used for API requests.                    |
+| **UPS_API_VERSION**     | `str` | `"v1"`                               | The version of the API to use.                         |
+| **UPS_CLIENT_ID**       | `str` | `None`                               | The application client ID to obtain the token.         |
+| **UPS_CLIENT_SECRET**   | `str` | `None`                               | The application client secret to obtain the token.     |
+| **UPS_GRANT_TYPE**      | `str` | `"client_credentials"`               | The application grant type to obtain the token.        |
+| **UPS_TOKEN**           | `str` | `None`                               | The token granted by the OAuth request.                |
+| **UPS_TRANSACTION_SRC** | `str` | `None`                               | The transaction source to be added to request headers. |
 
 ## License
 
