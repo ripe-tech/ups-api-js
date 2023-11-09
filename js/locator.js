@@ -1,5 +1,11 @@
+/**
+ * Option type for access point search.
+ */
 export const ACCESS_POINT_SEARCH = "64";
 
+/**
+ * Option type to sort by closest in search.
+ */
 export const CLOSEST_POINT_SEARCH = "01";
 
 export const LocatorAPI = superclass =>

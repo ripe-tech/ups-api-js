@@ -6,9 +6,24 @@ import { PickupAPI } from "./pickup";
 import { ShipmentAPI } from "./shipment";
 import { TrackingAPI } from "./tracking";
 
-const AUTH_URL = "https://wwwcie.ups.com/";
-const BASE_URL = "https://wwwcie.ups.com/api/";
+/**
+ * The base URL for the OAuth token request.
+ */
+const AUTH_URL = "https://onlinetools.ups.com/";
+
+/**
+ * The base URL for API requests.
+ */
+const BASE_URL = "https://onlinetools.ups.com/api/";
+
+/**
+ * The version of the API to use.
+ */
 const API_VERSION = "v1";
+
+/**
+ * The application grant type to obtain the token.
+ */
 const GRANT_TYPE = "client_credentials";
 
 export class API extends mix(BaseAPI).with(
