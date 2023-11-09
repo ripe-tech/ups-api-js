@@ -43,26 +43,4 @@ export const TrackingAPI = superclass =>
             const response = await this.get(url, options);
             return response;
         }
-
-        /**
-         * Gets the tracking information for an existing shipment.
-         * This method retrieves the complete set of information related with
-         * this shipment.
-         *
-         * @param {String} trackingNumber The tracking number of the shipment/waybill.
-         * @param {Object} options An object of options to configure the request.
-         * @returns {Object} The HTTP response object.
-         * @see https://www.ups.com/upsdeveloperkit?loc=en_US
-         */
-        async getTrackingDetailsExtended(trackingNumber, options = {}) {
-            const response = {
-                errors: [
-                    {
-                        code: 500,
-                        message: "Not implemented by UPS API Client"
-                    }
-                ]
-            };
-            return response;
-        }
     };
