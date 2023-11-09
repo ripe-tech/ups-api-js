@@ -43,4 +43,15 @@ export const TrackingAPI = superclass =>
             const response = await this.get(url, options);
             return response;
         }
+
+        /**
+         * Gets the tracking URL given a tracking number.
+         *
+         * @param {String} trackingNumber The tracking number of the shipment/waybill.
+         * @returns {String} The tracking URL.
+         * @see https://www.ups.com/upsdeveloperkit?loc=en_US
+         */
+        getTrackingUrl(trackingNumber) {
+            return `https://www.ups.com/track?InquiryNumber1=${trackingNumber}`;
+        }
     };

@@ -19,6 +19,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 *
 
+## [1.0.1] - 2023-11-09
+
+### Added
+
+* `getTrackingUrl` for tracking API - [#36](https://github.com/ripe-tech/ups-api-js/issues/36)
+
 ## [1.0.0] - 2023-11-09
 
 ### Changed
