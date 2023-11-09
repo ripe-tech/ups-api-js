@@ -1,3 +1,7 @@
+export const ACCESS_POINT_SEARCH = "64";
+
+export const CLOSEST_POINT_SEARCH = "01";
+
 export const LocatorAPI = superclass =>
     class extends superclass {
         /**
@@ -12,14 +16,50 @@ export const LocatorAPI = superclass =>
          * @see https://www.ups.com/upsdeveloperkit?loc=en_US
          */
         async getNearestAccessPoint(addressLine, city, postalCode, countryCode, options = {}) {
-            const response = {
-                errors: [
-                    {
-                        code: 500,
-                        message: "Not implemented by UPS API Client"
-                    }
-                ]
-            };
+            const url = `${this.baseUrl}locations/${this.version}/search/availabilities/${ACCESS_POINT_SEARCH}`;
+            const payload = this._buildNearestAccessPointPayload(
+                addressLine,
+                city,
+                postalCode,
+                countryCode,
+                options
+            );
+            const response = await this.post(url, {
+                ...options,
+                dataJ: payload
+            });
             return response;
+        }
+
+        _buildNearestAccessPointPayload(
+            addressLine,
+            city,
+            postalCode,
+            countryCode,
+            { consignee = null, locale = "en_US", metric = true, radius = 150 } = {}
+        ) {
+            const payload = {
+                LocatorRequest: {
+                    Request: {
+                        RequestAction: "Locator",
+                        RequestOption: ACCESS_POINT_SEARCH
+                    },
+                    OriginAddress: {
+                        AddressKeyFormat: {
+                            ConsigneeName: consignee,
+                            AddressLine: addressLine,
+                            PoliticalDivision2: city,
+                            PostcodePrimaryLow: postalCode,
+                            CountryCode: countryCode
+                        }
+                    },
+                    Translate: {
+                        Locale: locale
+                    },
+                    UnitOfMeasurement: { Code: metric ? "KM" : "MI" },
+                    SortCriteria: { SortType: CLOSEST_POINT_SEARCH }
+                }
+            };
+            return payload;
         }
     };
