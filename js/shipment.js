@@ -14,10 +14,14 @@ export const STANDARD_SERVICE_CODE = "011";
 export const SAVER_SERVICE_CODE = "065";
 
 /*
- * The code representing a shipment that is
- * charged via UPS account.
+ * The code representing a shipment transportation charges.
  */
 export const TRANSPORTATION_CHARGE_TYPE = "01";
+
+/*
+ * The code representing a shipment duties and taxes charges.
+ */
+export const DUTIES_CHARGE_TYPE = "02";
 
 /**
  * The code representing a customer box
