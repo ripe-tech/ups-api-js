@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-*
+* Added `DUTIES_CHARGE_TYPE` constant to API - [peri-shipping/#193](https://github.com/ripe-tech/peri-shipping/issues/193)
 
 ### Changed
 
