@@ -1,4 +1,4 @@
-import { API as BaseAPI, mix, load, conf, verify } from "yonius";
+import { API as BaseAPI, OperationalError, mix, load, conf } from "yonius";
 
 import { LocatorAPI } from "./locator";
 import { PaperlessAPI } from "./paperless";
@@ -63,6 +63,8 @@ export class API extends mix(BaseAPI).with(
     async build(method, url, options = {}) {
         await super.build(method, url, options);
 
+        if (this.token) options.headers.Authorization = this._bearerAuth();
+
         const transactionSrc = options.headers.transactionSrc || this.transactionSrc;
         if (transactionSrc) options.headers.transactionSrc = transactionSrc;
     }
@@ -72,8 +74,6 @@ export class API extends mix(BaseAPI).with(
         // token from the auth API
         this.token = null;
         await this.getToken();
-
-        headers.Authorization = this._bearerHeader();
     }
 
     async getToken() {
@@ -83,7 +83,7 @@ export class API extends mix(BaseAPI).with(
         const data = `grant_type=${this.grantType}`;
         const options = {
             headers: {
-                Authorization: this._basicHeader()
+                Authorization: this._basicAuth()
             },
             data: data,
             mime: "application/x-www-form-urlencoded"
@@ -97,13 +97,15 @@ export class API extends mix(BaseAPI).with(
 
     async _handleResponse(response, errorMessage = "Problem in request") {
         const result = await this._getResult(response);
-        const errors =
-            result.response && result.response.errors
-                ? result.response.errors.map(error => JSON.stringify(error)).join(",")
-                : null;
-        verify(!errors, errors, response.status || 500);
-        verify(!result.Fault, result.error || errorMessage, response.status || 500);
-        verify(response.ok, result.error || errorMessage, response.status || 500);
+        if (!response.ok) {
+            let error = null;
+            try {
+                error = JSON.stringify(result);
+            } catch {
+                error = errorMessage;
+            }
+            throw new OperationalError(error, response.status || 500);
+        }
         return result;
     }
 
@@ -134,12 +136,12 @@ export class API extends mix(BaseAPI).with(
         return result;
     }
 
-    _basicHeader() {
+    _basicAuth() {
         const auth = Buffer.from(`${this.clientId}:${this.clientSecret}`).toString("base64");
         return `Basic ${auth}`;
     }
 
-    _bearerHeader() {
+    _bearerAuth() {
         return `Bearer ${this.token}`;
     }
 }
