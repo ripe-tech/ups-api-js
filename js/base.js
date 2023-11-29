@@ -63,6 +63,8 @@ export class API extends mix(BaseAPI).with(
     async build(method, url, options = {}) {
         await super.build(method, url, options);
 
+        if (this.token) options.headers.Authorization = this._bearerAuth();
+
         const transactionSrc = options.headers.transactionSrc || this.transactionSrc;
         if (transactionSrc) options.headers.transactionSrc = transactionSrc;
     }
@@ -72,8 +74,6 @@ export class API extends mix(BaseAPI).with(
         // token from the auth API
         this.token = null;
         await this.getToken();
-
-        headers.Authorization = this._bearerHeader();
     }
 
     async getToken() {
