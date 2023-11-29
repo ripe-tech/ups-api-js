@@ -97,13 +97,15 @@ export class API extends mix(BaseAPI).with(
 
     async _handleResponse(response, errorMessage = "Problem in request") {
         const result = await this._getResult(response);
-        const errors =
-            result.response && result.response.errors
-                ? result.response.errors.map(error => JSON.stringify(error)).join(",")
-                : null;
-        verify(!errors, errors, response.status || 500);
-        verify(!result.Fault, result.error || errorMessage, response.status || 500);
-        verify(response.ok, result.error || errorMessage, response.status || 500);
+        if (!response.ok) {
+            let error = null;
+            try {
+                error = JSON.stringify(result);
+            } catch {
+                error = errorMessage;
+            }
+            throw new OperationalError(error, response.status || 500);
+        }
         return result;
     }
 
