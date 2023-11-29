@@ -1,4 +1,4 @@
-import { API as BaseAPI, mix, load, conf, verify } from "yonius";
+import { API as BaseAPI, OperationalError, mix, load, conf } from "yonius";
 
 import { LocatorAPI } from "./locator";
 import { PaperlessAPI } from "./paperless";
@@ -83,7 +83,7 @@ export class API extends mix(BaseAPI).with(
         const data = `grant_type=${this.grantType}`;
         const options = {
             headers: {
-                Authorization: this._basicHeader()
+                Authorization: this._basicAuth()
             },
             data: data,
             mime: "application/x-www-form-urlencoded"
@@ -136,12 +136,12 @@ export class API extends mix(BaseAPI).with(
         return result;
     }
 
-    _basicHeader() {
+    _basicAuth() {
         const auth = Buffer.from(`${this.clientId}:${this.clientSecret}`).toString("base64");
         return `Basic ${auth}`;
     }
 
-    _bearerHeader() {
+    _bearerAuth() {
         return `Bearer ${this.token}`;
     }
 }
