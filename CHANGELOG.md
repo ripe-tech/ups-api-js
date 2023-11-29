@@ -17,6 +17,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+*
+
+## [1.0.3] - 2023-11-29
+
+### Fixed
+
 * Auth header in request build method - [#36](https://github.com/ripe-tech/ups-api-js/issues/36)
 
 ## [1.0.2] - 2023-11-20
